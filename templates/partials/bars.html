@@ -1,0 +1,3 @@
+{% for r in rows %}
+<div class="bar"><span>{{ r.label }}</span><div><i data-width="{{ r.p }}"></i></div><b>{{ r.n }}</b></div>
+{% empty %}<p class="kosong">Belum ada data.</p>{% endfor %}

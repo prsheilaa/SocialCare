@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard Administrator{% endblock %}
+{% block content %}
+<div class="head">
+  <div><h1>{{ salam }}, {{ user.first_name|default:user.username }}</h1>
+  <p>Ringkasan komentar sosial media PLN NP UP Paiton · {% now "l, d F Y" %}</p></div>
+</div>
+
+<section class="kpis">
+  <div class="kpi"><span>Total komentar</span><b>{{ total }}</b><small>semua platform</small></div>
+  <div class="kpi hl"><span>Perlu ditangani</span><b>{{ n_aktif }}</b><small>negatif dan netral yang belum selesai</small></div>
+  <div class="kpi warn"><span>Prioritas tinggi dan urgent</span><b>{{ n_urgent }}</b><small>butuh respon segera</small></div>
+  <div class="kpi"><span>Menunggu persetujuan Anda</span><b>{{ n_pending }}</b><small>request dari petugas</small></div>
+  <div class="kpi"><span>Tingkat selesai</span><b>{{ selesai_p }}%</b><small>{{ selesai }} komentar selesai</small></div>
+</section>
+
+<section class="row2">
+  <div class="card">
+    <h2>Sentimen komentar</h2><p class="sub">Komentar positif otomatis selesai tanpa penanganan.</p>
+    {% include 'partials/donut.html' with s=sentimen %}
+  </div>
+  <div class="card">
+    <h2>Komentar masuk 7 hari terakhir</h2><p class="sub">Jumlah komentar per hari, dibagi menurut sentimen.</p>
+    <div class="trend">
+      {% for x in tren %}
+      <div class="col" title="{{ x.label }}: {{ x.pos }} positif, {{ x.net }} netral, {{ x.neg }} negatif">
+        <div class="plot"><div class="stack" data-height="{{ x.tinggi }}">
+  <i class="p" data-height="{{ x.pos_p }}"></i><i class="n" data-height="{{ x.net_p }}"></i><i class="g" data-height="{{ x.neg_p }}"></i>
+        </div></div>
+        <b style="color:var(--teks)">{{ x.total }}</b><span>{{ x.label }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="ket"><span><i class="dot pos"></i>Positif</span><span><i class="dot net"></i>Netral</span><span><i class="dot neg"></i>Negatif</span></div>
+  </div>
+</section>
+
+<section class="dua">
+  <div class="card">
+    <h2>Perlu respon segera</h2><p class="sub">Diurutkan dari prioritas tertinggi.</p>
+    <table>
+      <tr><th>Komentar</th><th>Prioritas</th><th>Status</th><th>Masuk</th></tr>
+      {% for k in segera %}
+      <tr>
+        <td><b>{{ k.penulis }}</b> <small>· {{ k.akun.platform }}</small><br>{{ k.isi|truncatechars:70 }}</td>
+        <td><span class="tag {{ k.prioritas }}">{{ k.get_prioritas_display }}</span></td>
+        <td><span class="tag {{ k.status }}">{{ k.get_status_display }}</span></td>
+        <td><small>{{ k.waktu|timesince }} lalu</small></td>
+      </tr>
+      {% empty %}<tr><td colspan="4" class="kosong">Tidak ada komentar yang menunggu penanganan.</td></tr>{% endfor %}
+    </table>
+  </div>
+  <div class="card">
+    <h2>Request menunggu persetujuan</h2><p class="sub">Diajukan petugas setelah memilih solusi.</p>
+    <div class="item-list">
+      {% for r in menunggu %}
+      <div><b>{{ r.solusi }}</b> oleh {{ r.petugas.first_name|default:r.petugas.username }}<br>
+      <small>{{ r.komentar.isi|truncatechars:60 }}</small></div>
+      {% empty %}<p class="kosong">Tidak ada request yang menunggu.</p>{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="row4">
+  <div class="card"><h2>Status penanganan</h2><p class="sub">Semua komentar</p>{% include 'partials/bars.html' with rows=b_status %}</div>
+  <div class="card"><h2>Prioritas</h2><p class="sub">Komentar yang perlu ditangani</p>{% include 'partials/bars.html' with rows=b_prioritas %}</div>
+  <div class="card"><h2>Platform</h2><p class="sub">Sumber komentar</p>{% include 'partials/bars.html' with rows=b_platform %}</div>
+  <div class="card"><h2>Kategori masalah</h2><p class="sub">Di luar komentar positif</p>{% include 'partials/bars.html' with rows=b_kategori %}</div>
+</section>
+{% endblock %}

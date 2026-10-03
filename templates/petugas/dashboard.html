@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard Petugas{% endblock %}
+{% block content %}
+<div class="head">
+  <div><h1>{{ salam }}, {{ user.first_name|default:user.username }}</h1>
+  <p>Komentar yang perlu Anda tangani · {% now "l, d F Y" %}</p></div>
+</div>
+
+<section class="kpis">
+  <div class="kpi hl"><span>Perlu dianalisis</span><b>{{ n_baru }}</b><small>komentar baru</small></div>
+  <div class="kpi"><span>Menunggu pengajuan solusi</span><b>{{ n_analisis }}</b><small>sudah dianalisis</small></div>
+  <div class="kpi"><span>Menunggu persetujuan</span><b>{{ n_menunggu }}</b><small>di tangan administrator</small></div>
+  <div class="kpi warn"><span>Siap ditindaklanjuti</span><b>{{ n_siap }}</b><small>request disetujui</small></div>
+  <div class="kpi"><span>Selesai</span><b>{{ n_selesai }}</b><small>komentar tertangani</small></div>
+</section>
+
+<section class="row2">
+  <div class="card">
+    <h2>Sentimen komentar</h2><p class="sub">Komentar positif otomatis selesai.</p>
+    {% include 'partials/donut.html' with s=sentimen %}
+  </div>
+  <div class="card">
+    <h2>Antrian prioritas</h2><p class="sub">Kerjakan dari atas ke bawah.</p>
+    <table>
+      <tr><th>Komentar</th><th>Prioritas</th><th>Status</th><th>Masuk</th></tr>
+      {% for k in antrian %}
+      <tr>
+        <td><b>{{ k.penulis }}</b> <small>· {{ k.akun.platform }}</small><br>{{ k.isi|truncatechars:60 }}</td>
+        <td><span class="tag {{ k.prioritas }}">{{ k.get_prioritas_display }}</span></td>
+        <td><span class="tag {{ k.status }}">{{ k.get_status_display }}</span></td>
+        <td><small>{{ k.waktu|timesince }} lalu</small></td>
+      </tr>
+      {% empty %}<tr><td colspan="4" class="kosong">Antrian kosong. Tidak ada komentar yang perlu dianalisis.</td></tr>{% endfor %}
+    </table>
+  </div>
+</section>
+
+<section class="row2 sama">
+  <div class="card">
+    <h2>Siap ditindaklanjuti</h2><p class="sub">Request sudah disetujui, catat hasilnya setelah dikerjakan.</p>
+    <div class="item-list">
+      {% for k in siap %}
+      <div><span class="tag {{ k.status }}">{{ k.get_status_display }}</span> <b>{{ k.kategori|default:"" }}</b><br>{{ k.isi|truncatechars:80 }}</div>
+      {% empty %}<p class="kosong">Belum ada request yang disetujui.</p>{% endfor %}
+    </div>
+  </div>
+  <div class="card">
+    <h2>Request terakhir saya</h2><p class="sub">Keputusan administrator atas pengajuan Anda.</p>
+    <div class="item-list">
+      {% for r in request_saya %}
+      <div><span class="tag {{ r.status }}">{{ r.get_status_display }}</span> <b>{{ r.solusi }}</b><br><small>{{ r.komentar.isi|truncatechars:70 }}</small></div>
+      {% empty %}<p class="kosong">Anda belum mengajukan request.</p>{% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

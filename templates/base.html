@@ -1,0 +1,29 @@
+{% load static %}<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Monitoring Komentar{% endblock %} | PLN NP UP Paiton</title>
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% if user.is_authenticated %}
+<link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% else %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endif %}
+</head>
+<body>
+<div class="app {% if user.is_authenticated %}has-side{% endif %}">
+  {% if user.is_authenticated %}
+    <div class="topbar-m">
+      <button type="button" data-menu-toggle aria-label="Buka menu" aria-expanded="false">Menu</button>
+      <b>PLN NP UP Paiton</b>
+    </div>
+    <div class="overlay" data-menu-overlay></div>
+    {% include 'partials/sidebar.html' %}
+  {% endif %}
+  <div class="body">{% block content %}{% endblock %}</div>
+</div>
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

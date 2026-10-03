@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Masuk{% endblock %}
+{% block content %}
+<div class="login">
+  <section class="hero">
+    <div class="brand">
+      <div class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="#06305C"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></div>
+      <div><b>PLN Nusantara Power</b><small>UP Paiton</small></div>
+    </div>
+    <div>
+      <h1>Setiap komentar warga dijawab tepat waktu.</h1>
+      <p>Pantau komentar di media sosial perusahaan, tentukan solusinya, dan catat hasilnya di satu tempat.</p>
+    </div>
+    <div class="fakta">
+      <div><b>3 sentimen</b><span>positif, netral, negatif</span></div>
+      <div><b>2 peran</b><span>administrator dan petugas</span></div>
+    </div>
+  </section>
+  <section class="form-wrap">
+    <form method="post">
+      {% csrf_token %}
+      <h2>Masuk ke akun Anda</h2>
+      <p class="petunjuk">Gunakan akun yang diberikan administrator.</p>
+      {% if form.errors %}<div class="pesan" style="margin-top:14px">Nama pengguna atau kata sandi salah. Periksa lagi lalu coba masuk.</div>{% endif %}
+      <label for="id_username">Nama pengguna</label>{{ form.username }}
+      <label for="id_password">Kata sandi</label>{{ form.password }}
+      <p style="margin-top:20px"><button class="btn kuning" style="width:100%;padding:12px">Masuk</button></p>
+    </form>
+  </section>
+</div>
+{% endblock %}

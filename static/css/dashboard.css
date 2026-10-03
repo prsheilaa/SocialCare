@@ -1,0 +1,60 @@
+/* kartu angka */
+.kpis{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));margin-bottom:20px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.kpi span{color:var(--redup);font-size:13px}
+.kpi b{display:block;font-size:34px;line-height:1.2;color:var(--navy)}
+.kpi small{color:var(--redup)}
+.kpi.hl{background:var(--navy);border-color:var(--navy)}
+.kpi.hl span,.kpi.hl small{color:#9fc3e6}
+.kpi.hl b{color:var(--kuning)}
+.kpi.warn b{color:var(--merah)}
+
+/* tata letak bagian dashboard */
+.row2{display:grid;gap:20px;grid-template-columns:minmax(320px,5fr) 7fr}
+.row2.sama{grid-template-columns:1fr 1fr}
+.row4{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.row4 .card{margin-bottom:0}
+.dua{display:grid;gap:20px;grid-template-columns:7fr 5fr}
+
+/* donut sentimen */
+.donut-wrap{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.donut{width:176px;height:176px;border-radius:50%;position:relative;flex:none}
+.donut::after{content:"";position:absolute;inset:28px;background:#fff;border-radius:50%}
+.donut div{position:absolute;inset:0;display:grid;place-content:center;text-align:center;z-index:1}
+.donut b{font-size:28px;line-height:1.1}
+.donut small{color:var(--redup)}
+.legend{flex:1;min-width:170px}
+.legend div{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.legend div:last-child{border:0}
+.legend span{flex:1}
+.legend b{font-size:18px}
+.legend small{color:var(--redup);width:34px;text-align:right}
+.dot{width:12px;height:12px;border-radius:3px;flex:none;display:inline-block}
+.dot.pos{background:var(--hijau)}
+.dot.net{background:var(--abu)}
+.dot.neg{background:var(--merah)}
+
+/* grafik tren 7 hari */
+.trend{display:flex;gap:10px;height:190px}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;gap:6px;font-size:12px;color:var(--redup)}
+.plot{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.stack{
+  width:100%;max-width:48px;display:flex;flex-direction:column-reverse;
+  border-radius:6px 6px 0 0;overflow:hidden;min-height:3px;background:#E4EBF3;
+  transition:height .8s ease;
+}
+.stack i{display:block}
+.stack .p{background:var(--hijau)}
+.stack .n{background:var(--abu)}
+.stack .g{background:var(--merah)}
+.ket{display:flex;gap:16px;font-size:13px;color:var(--redup);margin-top:12px}
+.ket span{display:flex;align-items:center;gap:6px}
+
+/* grafik batang */
+.bar{display:grid;grid-template-columns:105px 1fr 34px;gap:10px;align-items:center;margin:9px 0;font-size:14px}
+.bar div{background:#E4EBF3;border-radius:6px;height:10px}
+.bar i{display:block;height:10px;border-radius:6px;background:var(--biru);transition:width .8s ease}
+.bar b{text-align:right}
+
+@media(max-width:1000px){.row2,.dua,.row2.sama{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.stack,.bar i{transition:none}}

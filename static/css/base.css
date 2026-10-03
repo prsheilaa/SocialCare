@@ -1,0 +1,61 @@
+:root{
+  --biru:#0A4A8C;--navy:#06305C;--cyan:#00A2B9;--kuning:#FFD400;
+  --merah:#D9261C;--hijau:#1E9E5A;--abu:#8FA3B8;
+  --bg:#F2F6FA;--teks:#14263A;--line:#D8E2EC;--redup:#5b6f84;
+}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 "Segoe UI",system-ui,sans-serif;color:var(--teks);background:var(--bg)}
+h1{font-size:26px;margin:0 0 2px}
+p{margin:0}
+
+/* kerangka halaman */
+.app{display:flex;min-height:100vh}
+.body{flex:1;min-width:0}
+.has-side .body{padding:28px 32px 40px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.head p{color:var(--redup)}
+.head .refresh{font-size:12px;margin-top:2px}
+
+/* logo dan merek (dipakai sidebar dan halaman login) */
+.brand{display:flex;gap:12px;align-items:center;padding:22px 20px;border-bottom:1px solid #ffffff1f}
+.brand b{display:block;line-height:1.2}
+.brand small{color:#9fc3e6;font-size:12px}
+.logo{width:40px;height:40px;border-radius:10px;background:var(--kuning);display:grid;place-items:center;flex:none}
+
+/* tombol dan formulir */
+.btn{display:inline-block;background:var(--biru);color:#fff;border:0;border-radius:6px;padding:9px 18px;font:inherit;cursor:pointer}
+.btn:hover{background:var(--navy)}
+.btn.kuning{background:var(--kuning);color:var(--navy);font-weight:700}
+.btn.kuning:hover{background:#e6bf00}
+.btn.kecil{padding:6px 12px;font-size:13px;width:100%}
+input{width:100%;padding:10px 12px;border:1px solid #b9c8d8;border-radius:6px;font:inherit;background:#fff}
+label{display:block;font-weight:600;margin:14px 0 4px}
+input:focus,.btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offset:1px}
+.pesan{padding:10px 14px;border-radius:6px;margin-bottom:14px;background:#FBDAD7;border-left:5px solid var(--merah)}
+
+/* kartu dan tabel */
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:20px;overflow-x:auto}
+.card h2{font-size:16px;margin:0 0 2px}
+.card .sub{color:var(--redup);font-size:13px;margin:0 0 14px}
+.kosong{color:var(--redup);padding:14px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--redup);font-weight:600;font-size:13px;background:#F6F9FC}
+td small{color:var(--redup)}
+.item-list>div{padding:12px 0;border-bottom:1px solid var(--line)}
+.item-list>div:last-child{border:0}
+.item-list small{color:var(--redup)}
+
+/* label sentimen, prioritas, dan status */
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:#E4EBF3;color:var(--navy);white-space:nowrap}
+.positif,.selesai,.disetujui{background:#D6F2E3;color:#0f6b3b}
+.negatif,.urgent,.ditolak{background:#FBDAD7;color:#9d1a12}
+.tinggi,.menunggu,.pending{background:#FFF0B3;color:#6b5600}
+.sedang,.dianalisis{background:#D4EEF3;color:#00606e}
+.baru{background:#DCE8FA;color:var(--biru)}
+.ditindaklanjuti{background:#E8DEFA;color:#4a2a8c}
+
+@media(max-width:800px){
+  .app{flex-direction:column}
+  .has-side .body{padding:18px}
+}
