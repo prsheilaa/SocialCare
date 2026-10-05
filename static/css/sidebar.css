@@ -1,18 +1,18 @@
 .side{
-  width:256px;flex:none;background:var(--navy);color:#fff;
+  width:256px;flex:none;background:var(--teal);color:#fff;
   position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
-  border-right:5px solid var(--kuning);
+  border-right:0;
 }
 .menu{flex:1;overflow:auto;padding:14px 12px}
-.menu h4{margin:18px 12px 6px;font-size:12px;font-weight:600;color:#7fa6cf}
-.item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:8px;color:#d6e6f7;text-decoration:none;margin-bottom:2px}
-a.item:hover{background:#ffffff14}
+.menu h4{margin:18px 12px 6px;font-size:12px;font-weight:600;color:#CFEFF4}
+.item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:8px;color:#fff;text-decoration:none;margin-bottom:2px}
+a.item:hover{background:#ffffff26}
 .item.on{background:var(--kuning);color:var(--navy);font-weight:700}
-.item.off{color:#7f9dbd;cursor:not-allowed}
+.item.off{color:#ffffff99;}
 .item em{font-style:normal;font-size:11px;background:#ffffff18;padding:1px 8px;border-radius:99px}
 .me{padding:16px 20px;border-top:1px solid #ffffff1f;font-size:13px}
 .me b{display:block}
-.me small{color:#9fc3e6}
+.me small{color:#D7F1F5}
 .me form{margin-top:10px}
 
 /* bilah atas dan latar gelap: hanya tampil di ponsel */
@@ -25,12 +25,12 @@ a.item:hover{background:#ffffff14}
   }
   .menu-open .side{transform:none}
   .overlay{
-    display:block;position:fixed;inset:0;background:#06305c99;z-index:20;
+    display:block;position:fixed;inset:0;background:#06404a99;z-index:20;
     opacity:0;pointer-events:none;transition:opacity .25s ease;
   }
   .menu-open .overlay{opacity:1;pointer-events:auto}
   .topbar-m{
-    display:flex;align-items:center;gap:12px;background:var(--navy);color:#fff;
+    display:flex;align-items:center;gap:12px;background:var(--teal);color:#fff;
     padding:12px 16px;border-bottom:4px solid var(--kuning);position:sticky;top:0;z-index:10;
   }
   .topbar-m button{background:transparent;border:1px solid #ffffff55;color:#fff;border-radius:6px;padding:6px 12px;font:inherit;cursor:pointer}

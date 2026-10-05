@@ -2,10 +2,10 @@
 .kpis{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));margin-bottom:20px}
 .kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
 .kpi span{color:var(--redup);font-size:13px}
-.kpi b{display:block;font-size:34px;line-height:1.2;color:var(--navy)}
+.kpi b{display:block;font-size:34px;line-height:1.2;color:var(--teks)}
 .kpi small{color:var(--redup)}
-.kpi.hl{background:var(--navy);border-color:var(--navy)}
-.kpi.hl span,.kpi.hl small{color:#9fc3e6}
+.kpi.hl{background:var(--teal);border-color:var(--teal)}
+.kpi.hl span,.kpi.hl small{color:#E3F7FA}
 .kpi.hl b{color:var(--kuning)}
 .kpi.warn b{color:var(--merah)}
 
@@ -55,26 +55,6 @@
 .bar div{background:#E4EBF3;border-radius:6px;height:10px}
 .bar i{display:block;height:10px;border-radius:6px;background:var(--biru);transition:width .8s ease}
 .bar b{text-align:right}
-
-/* kepala kartu antrian prioritas */
-.antrian h2{font-size:18px}
-.ah{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
-.ah .sub{max-width:520px;margin-bottom:14px}
-.ah-aksi{display:flex;gap:8px;flex:none}
-.ikon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:#E4EBF3;color:var(--navy);text-decoration:none;transition:background .15s,color .15s}
-.ikon:hover{background:#d3deea}
-.ikon.on{background:var(--navy);color:#fff}
-.ah-filter{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{padding:6px 14px;border-radius:99px;background:#E4EBF3;color:var(--redup);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s}
-.chip span{font-weight:600}
-a.chip:hover{background:#d3deea;color:var(--navy)}
-.chip.on{background:var(--navy);color:#fff}
-.cari{display:flex;align-items:center;gap:8px;flex:1;min-width:220px;max-width:340px;margin:0;padding:0 12px;background:var(--bg);border:1px solid var(--line);border-radius:10px;color:var(--redup);font-weight:400}
-.cari:focus-within{border-color:var(--cyan);box-shadow:0 0 0 3px #00a2b933}
-.cari input{border:0;background:transparent;padding:9px 0;outline:0;font-size:14px;color:var(--teks)}
-.cari input:focus{outline:0}
-@media(max-width:600px){.ah{flex-direction:column-reverse}.cari{max-width:none}}
 
 @media(max-width:1000px){.row2,.dua,.row2.sama{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.stack,.bar i{transition:none}}

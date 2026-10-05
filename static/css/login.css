@@ -5,11 +5,11 @@
   border-right:8px solid var(--kuning);
 }
 .hero h1{font-size:42px;line-height:1.15;max-width:520px}
-.hero p{color:#bcd6f0;max-width:430px;margin-top:14px;font-size:16px}
+.hero p{color:#E3F7FA;max-width:430px;margin-top:14px;font-size:16px}
 .hero .brand{padding:0;border:0}
 .hero .fakta{display:flex;gap:28px;flex-wrap:wrap}
 .hero .fakta b{display:block;font-size:26px;color:var(--kuning)}
-.hero .fakta span{color:#bcd6f0;font-size:13px}
+.hero .fakta span{color:#E3F7FA;font-size:13px}
 .form-wrap{display:flex;align-items:center;justify-content:center;padding:30px}
 .form-wrap form{width:100%;max-width:350px}
 .form-wrap h2{font-size:24px;margin:0 0 4px}
