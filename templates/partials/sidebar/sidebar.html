@@ -1,0 +1,21 @@
+{% with n=request.resolver_match.url_name %}
+<aside class="side">
+  <div class="brand">
+    <div class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="#06305C"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></div>
+    <div><b>PLN Nusantara Power</b><small>UP Paiton · Monitoring Komentar</small></div>
+  </div>
+
+  <nav class="menu">
+    {% if user.is_admin %}
+      {% include "partials/sidebar/menu_admin.html" %}
+    {% else %}
+      {% include "partials/sidebar/menu_petugas.html" %}
+    {% endif %}
+  </nav>
+
+  <div class="me">
+    <b>{{ user.first_name|default:user.username }}</b><small>{{ user.get_role_display }}</small>
+    <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="btn kuning kecil">Keluar</button></form>
+  </div>
+</aside>
+{% endwith %}

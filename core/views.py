@@ -1,6 +1,7 @@
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
-from django.db.models import Case, Count, IntegerField, When
+from urllib.parse import urlencode
+from django.db.models import Case, Count, IntegerField, Q, When
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from .models import Komentar, RequestRespon
@@ -16,6 +17,12 @@ def persen(n, total):
 def salam():
     j = timezone.localtime().hour
     return 'Selamat pagi' if j < 11 else 'Selamat siang' if j < 15 else 'Selamat sore' if j < 18 else 'Selamat malam'
+
+
+def tautan(**param):
+    """Bangun query string untuk chip/tombol; parameter kosong dibuang."""
+    param = {k: v for k, v in param.items() if v}
+    return '?' + urlencode(param) if param else '?'
 
 
 def ringkasan_sentimen(qs):
@@ -85,12 +92,38 @@ def dashboard_petugas(request):
     K = Komentar.objects.all()
     aktif = K.exclude(sentimen='positif')
     siap = aktif.filter(status__in=['disetujui', 'ditindaklanjuti'])
+
+    # antrian prioritas: filter chip (f), pencarian (q), dan urutan (urut)
+    dasar = aktif.filter(status__in=['baru', 'dianalisis'])
+    f = request.GET.get('f', '')
+    q = request.GET.get('q', '').strip()
+    urut = 'terbaru' if request.GET.get('urut') == 'terbaru' else ''
+    saring = dasar
+    if f == 'urgent':
+        saring = saring.filter(prioritas='urgent')
+    elif f == 'tinggi':
+        saring = saring.filter(prioritas='tinggi')
+    elif f == 'baru':
+        saring = saring.filter(status='baru')
+    else:
+        f = ''
+    if q:
+        saring = saring.filter(Q(penulis__icontains=q) | Q(isi__icontains=q) |
+                               Q(akun__nama_akun__icontains=q) | Q(akun__platform__nama__icontains=q))
+    saring = saring.select_related('akun__platform')
+    saring = saring.order_by('-waktu') if urut else saring.annotate(u=URUT).order_by('u', '-waktu')
+
+    chips = [dict(key=k, label=lbl, n=n, on=(f == k), href=tautan(f=k, q=q, urut=urut))
+             for k, lbl, n in (('', 'Semua', dasar.count()),
+                               ('urgent', 'Urgent', dasar.filter(prioritas='urgent').count()),
+                               ('tinggi', 'Tinggi', dasar.filter(prioritas='tinggi').count()),
+                               ('baru', 'Status Baru', None))]
     ctx = dict(
         salam=salam(), n_baru=aktif.filter(status='baru').count(),
         n_analisis=aktif.filter(status='dianalisis').count(), n_menunggu=aktif.filter(status='menunggu').count(),
         n_siap=siap.count(), n_selesai=K.filter(status='selesai').count(), sentimen=ringkasan_sentimen(K),
-        antrian=aktif.filter(status__in=['baru', 'dianalisis']).select_related('akun__platform')
-                     .annotate(u=URUT).order_by('u', '-waktu')[:7],
+        antrian=saring[:7], f=f, q=q, urut=urut, chips=chips, sedang_filter=bool(f or q),
+        href_urut=tautan(f=f, q=q, urut='' if urut else 'terbaru'), href_reset=tautan(urut=urut),
         siap=siap.select_related('akun__platform', 'kategori')[:5],
         request_saya=RequestRespon.objects.filter(petugas=request.user).select_related('komentar', 'solusi')[:5])
     return render(request, 'petugas/dashboard.html', ctx)
